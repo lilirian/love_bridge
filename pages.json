@@ -22,9 +22,23 @@
 			}
 		},
 		{
+			"path": "pages/private-chat/private-chat",
+			"style": {
+				"navigationBarTitleText": "与你交流",
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/my/my",
 			"style": {
 				"navigationBarTitleText": "我的",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/chat-detail/chat-detail",
+			"style": {
+				"navigationBarTitleText": "聊天详情",
 				"navigationStyle": "custom"
 			}
 		}
@@ -58,6 +72,12 @@
 				"text": "知音匹配",
 				"iconPath": "static/images/tabbar/match.png",
 				"selectedIconPath": "static/images/tabbar/match-active.png"
+			},
+			{
+				"pagePath": "pages/private-chat/private-chat",
+				"text": "与你交流",
+				"iconPath": "static/images/tabbar/private-chat.png",
+				"selectedIconPath": "static/images/tabbar/private-chat-active.png"
 			},
 			{
 				"pagePath": "pages/my/my",
