@@ -41,6 +41,34 @@
 				"navigationBarTitleText": "聊天详情",
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path": "pages/coach/coach",
+			"style": {
+				"navigationBarTitleText": "万能恋爱导师",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/analyze/analyze",
+			"style": {
+				"navigationBarTitleText": "约会对象分析",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/profile/profile",
+			"style": {
+				"navigationBarTitleText": "个人资料优化",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/stories/stories",
+			"style": {
+				"navigationBarTitleText": "情感故事分享",
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"globalStyle": {

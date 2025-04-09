@@ -10,7 +10,7 @@
     </view>
 
     <!-- 功能卡片区域 -->
-    <view class="card-container">
+    <view class="card-grid">
       <!-- 万能恋爱导师卡片 -->
       <view class="card" @tap="navigateTo('/pages/coach/coach')">
         <image class="card-image" src="/static/images/coach.png" mode="aspectFill"></image>
@@ -43,6 +43,19 @@
         <view class="card-content">
           <text class="card-title">个人资料优化</text>
           <text class="card-desc">让AI帮你打造完美的个人介绍</text>
+          <view class="card-button">
+            <text>立即使用</text>
+            <text class="arrow">→</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 情感故事分享卡片 -->
+      <view class="card" @tap="navigateTo('/pages/stories/stories')">
+        <image class="card-image" src="/static/images/stories.png" mode="aspectFill"></image>
+        <view class="card-content">
+          <text class="card-title">情感故事分享</text>
+          <text class="card-desc">分享你的故事，倾听他人的经历</text>
           <view class="card-button">
             <text>立即使用</text>
             <text class="arrow">→</text>
@@ -114,10 +127,10 @@ export default {
   color: #666;
 }
 
-.card-container {
-  display: flex;
-  flex-direction: column;
-  gap: 30rpx;
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20rpx;
   padding: 20rpx;
 }
 
@@ -135,26 +148,26 @@ export default {
 
 .card-image {
   width: 100%;
-  height: 300rpx;
+  height: 200rpx;
   object-fit: cover;
 }
 
 .card-content {
-  padding: 30rpx;
+  padding: 20rpx;
 }
 
 .card-title {
-  font-size: 36rpx;
+  font-size: 32rpx;
   font-weight: bold;
   color: #333;
-  margin-bottom: 16rpx;
+  margin-bottom: 10rpx;
   display: block;
 }
 
 .card-desc {
-  font-size: 28rpx;
+  font-size: 24rpx;
   color: #666;
-  margin-bottom: 30rpx;
+  margin-bottom: 20rpx;
   display: block;
 }
 
@@ -163,10 +176,10 @@ export default {
   align-items: center;
   justify-content: center;
   background: linear-gradient(45deg, #ff4081, #ff80ab);
-  padding: 20rpx 40rpx;
+  padding: 16rpx 30rpx;
   border-radius: 50rpx;
   color: white;
-  font-size: 28rpx;
+  font-size: 24rpx;
   width: fit-content;
 }
 
