@@ -1,207 +1,152 @@
 <template>
-  <view class="container">
-    <!-- 顶部用户信息 -->
-    <view class="user-header">
-      <view class="user-info">
-        <image class="avatar" src="/static/images/my/avatar.png" mode="aspectFill"></image>
-        <view class="info-content">
-          <text class="nickname">小可爱</text>
-          <text class="user-id">ID: 888888</text>
-        </view>
+  <view class="my-container">
+    <view class="user-info">
+      <view class="avatar">
+        <image :src="userAvatar" mode="aspectFill"></image>
       </view>
-      <view class="edit-btn" @tap="handleEdit">
-        <text>编辑资料</text>
+      <view class="info">
+        <text class="username">{{ userInfo?.username || '未登录' }}</text>
+        <text class="email">{{ userInfo?.email || '请登录' }}</text>
       </view>
     </view>
-
-    <!-- 功能列表 -->
-    <view class="function-list">
-      <view class="function-group">
-        <view class="function-item" v-for="(item, index) in functionList" :key="index" @tap="handleFunction(item)">
-          <view class="item-left">
-            <image class="item-icon" :src="item.icon" mode="aspectFit"></image>
-            <text class="item-title">{{item.title}}</text>
-          </view>
-          <text class="arrow">→</text>
-        </view>
+    
+    <view class="menu-list">
+      <view class="menu-item" @tap="goToProfile">
+        <text class="icon">👤</text>
+        <text class="text">个人资料</text>
+        <text class="arrow">></text>
       </view>
-    </view>
-
-    <!-- 退出登录按钮 -->
-    <view class="logout-btn" @tap="handleLogout">
-      <text>退出登录</text>
+      <view class="menu-item" @tap="goToSettings">
+        <text class="icon">⚙️</text>
+        <text class="text">设置</text>
+        <text class="arrow">></text>
+      </view>
+      <view class="menu-item" @tap="handleLogout" v-if="isLoggedIn">
+        <text class="icon">🚪</text>
+        <text class="text">退出登录</text>
+        <text class="arrow">></text>
+      </view>
     </view>
   </view>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      functionList: [
-        {
-          title: '我的收藏',
-          icon: '/static/images/my/collect.png'
-        },
-        {
-          title: '聊天记录',
-          icon: '/static/images/my/chat.png'
-        },
-        {
-          title: '隐私设置',
-          icon: '/static/images/my/privacy.png'
-        },
-        {
-          title: '关于我们',
-          icon: '/static/images/my/about.png'
-        }
-      ]
-    }
-  },
-  methods: {
-    handleEdit() {
-      uni.showToast({
-        title: '编辑资料',
-        icon: 'none'
-      })
-    },
-    handleFunction(item) {
-      uni.showToast({
-        title: item.title,
-        icon: 'none'
-      })
-    },
-    handleLogout() {
-      uni.showModal({
-        title: '提示',
-        content: '确定要退出登录吗？',
-        success: (res) => {
-          if (res.confirm) {
-            uni.showToast({
-              title: '已退出登录',
-              icon: 'success'
-            })
-          }
-        }
-      })
-    }
+<script setup>
+import { computed, onMounted } from 'vue'
+import { useStore } from 'vuex'
+
+const store = useStore()
+
+const isLoggedIn = computed(() => store.state.isLoggedIn)
+const userInfo = computed(() => store.state.userInfo)
+const userProfile = computed(() => store.state.userProfile)
+const userAvatar = computed(() => userProfile.value?.avatar || '/static/images/default-avatar.png')
+
+const goToProfile = () => {
+  if (!isLoggedIn.value) {
+    uni.navigateTo({
+      url: '/pages/auth/login'
+    })
+    return
   }
+  uni.navigateTo({
+    url: '/pages/profile/profile'
+  })
 }
+
+const goToSettings = () => {
+  uni.navigateTo({
+    url: '/pages/settings/settings'
+  })
+}
+
+const handleLogout = () => {
+  uni.showModal({
+    title: '提示',
+    content: '确定要退出登录吗？',
+    success: (res) => {
+      if (res.confirm) {
+        store.commit('logout')
+        uni.showToast({
+          title: '已退出登录',
+          icon: 'success'
+        })
+        uni.navigateTo({
+          url: '/pages/auth/login'
+        })
+      }
+    }
+  })
+}
+
+// 页面显示时获取用户信息
+onMounted(() => {
+  if (isLoggedIn.value) {
+    store.dispatch('fetchUserProfile')
+  }
+})
 </script>
 
-<style>
-.container {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #fff9c4 0%, #fff59d 100%);
-  padding: 20rpx;
-}
-
-.user-header {
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 30rpx;
+<style lang="scss">
+.my-container {
   padding: 40rpx;
-  margin-bottom: 40rpx;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
-}
-
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 30rpx;
-}
-
-.avatar {
-  width: 120rpx;
-  height: 120rpx;
-  border-radius: 50%;
-  border: 4rpx solid #fff;
-  box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.1);
-}
-
-.info-content {
-  display: flex;
-  flex-direction: column;
-  gap: 10rpx;
-}
-
-.nickname {
-  font-size: 36rpx;
-  font-weight: bold;
-  color: #333;
-}
-
-.user-id {
-  font-size: 24rpx;
-  color: #666;
-}
-
-.edit-btn {
-  background: linear-gradient(45deg, #ffd54f, #ffc107);
-  padding: 20rpx 40rpx;
-  border-radius: 40rpx;
-  color: #333;
-  font-size: 28rpx;
-}
-
-.function-list {
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 30rpx;
-  overflow: hidden;
-  margin-bottom: 40rpx;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
-}
-
-.function-group {
-  padding: 20rpx 0;
-}
-
-.function-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 30rpx 40rpx;
-  border-bottom: 2rpx solid rgba(0, 0, 0, 0.05);
-}
-
-.function-item:last-child {
-  border-bottom: none;
-}
-
-.item-left {
-  display: flex;
-  align-items: center;
-  gap: 20rpx;
-}
-
-.item-icon {
-  width: 40rpx;
-  height: 40rpx;
-}
-
-.item-title {
-  font-size: 28rpx;
-  color: #333;
-}
-
-.arrow {
-  color: #999;
-  font-size: 28rpx;
-}
-
-.logout-btn {
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 40rpx;
-  padding: 30rpx;
-  text-align: center;
-  color: #ff4081;
-  font-size: 28rpx;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
-}
-
-.logout-btn:active {
-  transform: scale(0.98);
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 60rpx;
+    
+    .avatar {
+      width: 120rpx;
+      height: 120rpx;
+      border-radius: 60rpx;
+      overflow: hidden;
+      margin-right: 30rpx;
+      
+      image {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    
+    .info {
+      .username {
+        font-size: 36rpx;
+        font-weight: bold;
+        color: #333;
+        display: block;
+        margin-bottom: 10rpx;
+      }
+      
+      .email {
+        font-size: 28rpx;
+        color: #666;
+      }
+    }
+  }
+  
+  .menu-list {
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 30rpx 0;
+      border-bottom: 1rpx solid #eee;
+      
+      .icon {
+        font-size: 40rpx;
+        margin-right: 20rpx;
+      }
+      
+      .text {
+        flex: 1;
+        font-size: 32rpx;
+        color: #333;
+      }
+      
+      .arrow {
+        font-size: 32rpx;
+        color: #999;
+      }
+    }
+  }
 }
 </style> 
