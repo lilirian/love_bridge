@@ -381,6 +381,11 @@ ${chatContent}
   color: #333;
   box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
   border: 2rpx solid #f0f0f0;
+  box-sizing: border-box;
+  word-break: break-all;
+  white-space: pre-wrap;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .chat-input:focus {
@@ -438,6 +443,8 @@ ${chatContent}
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   max-height: 800rpx;
+  word-break: break-all;
+  white-space: pre-wrap;
 }
 
 .action-buttons {
