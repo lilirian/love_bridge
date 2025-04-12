@@ -4,15 +4,24 @@
     <view class="nav-bar">
       <view class="nav-content">
         <text class="title">AI畅聊</text>
-        <text class="subtitle">和AI谈谈心吧~</text>
+        <text class="subtitle">选择你喜欢的AI助手吧~</text>
+      </view>
+    </view>
+
+    <!-- 智能体选择区域 -->
+    <view class="agent-grid">
+      <view class="agent-card" v-for="(agent, index) in agents" :key="index" @tap="selectAgent(agent)">
+        <image class="agent-avatar" :src="agent.avatar" mode="aspectFill"></image>
+        <text class="agent-name">{{agent.name}}</text>
+        <text class="agent-desc">{{agent.description}}</text>
       </view>
     </view>
 
     <!-- 聊天区域 -->
-    <scroll-view class="chat-container" scroll-y="true" :scroll-top="scrollTop">
+    <scroll-view class="chat-container" scroll-y="true" :scroll-top="scrollTop" v-if="selectedAgent">
       <view class="chat-list">
         <view class="chat-item ai" v-for="(item, index) in chatList" :key="index" v-if="item.type === 'ai'">
-          <image class="avatar" src="/static/images/ai-avatar.png" mode="aspectFill"></image>
+          <image class="avatar" :src="selectedAgent.avatar" mode="aspectFill"></image>
           <view class="message">
             <text>{{item.content}}</text>
           </view>
@@ -27,7 +36,7 @@
     </scroll-view>
 
     <!-- 输入区域 -->
-    <view class="input-area">
+    <view class="input-area" v-if="selectedAgent">
       <input class="input" type="text" v-model="inputMessage" placeholder="说点什么吧..." />
       <view class="send-btn" @tap="sendMessage">
         <text>发送</text>
@@ -40,19 +49,65 @@
 export default {
   data() {
     return {
-      chatList: [
+      agents: [
         {
-          type: 'ai',
-          content: '你好呀！我是你的AI恋爱顾问，有什么想聊的吗？'
+          id: 'y7z63lZRYE5F',
+          name: '蔺昭',
+          description: '温柔体贴的男性角色',
+          avatar: '/static/images/agent1.png',
+          token: 'baUp0tGq6VOCyrAnXz16VsjqRRL3iyVX'
+        },
+        {
+          id: 'eXEaQYguME2Q',
+          name: '沐阳',
+          description: '阳光开朗的男性角色',
+          avatar: '/static/images/agent2.png',
+          token: 'o0EYdiKCfCZ5KZ0hrFG028rXoV96rTAH'
+        },
+        {
+          id: 'E2ZKO8dpJPLU',
+          name: '夏曜',
+          description: '成熟稳重的男性角色',
+          avatar: '/static/images/agent3.png',
+          token: 'QqvOBvuemNgPsu3zeRBKiJYP9MV5O0Cy'
+        },
+        {
+          id: 'lxiWRNpk2G9r',
+          name: '女友',
+          description: '温柔可爱的女性角色',
+          avatar: '/static/images/agent4.png',
+          token: 'TnojdeD0jHPQLUCsUM6DR50FEuYWb15R'
+        },
+        {
+          id: 'hAmlYgLLrPSZ',
+          name: '邻家姐姐',
+          description: '知性优雅的女性角色',
+          avatar: '/static/images/agent5.png',
+          token: 'Y4GQWxz3wRpBWsudXa1bVidNSFa4NyWu'
+        },
+        {
+          id: 'rz4vDYMIGXQW',
+          name: '邻家妹妹',
+          description: '活泼可爱的女性角色',
+          avatar: '/static/images/agent6.png',
+          token: 'XtW9cxsuZoMKmkOZFltz0YS4ZHLSNBfM'
         }
       ],
+      selectedAgent: null,
+      chatList: [],
       inputMessage: '',
       scrollTop: 0
     }
   },
   methods: {
-    sendMessage() {
-      if (!this.inputMessage.trim()) return
+    selectAgent(agent) {
+      // 跳转到聊天详情页面
+      uni.navigateTo({
+        url: `/pages/chat/chat-detail?agent=${encodeURIComponent(JSON.stringify(agent))}`
+      })
+    },
+    async sendMessage() {
+      if (!this.inputMessage.trim() || !this.selectedAgent) return
       
       // 添加用户消息
       this.chatList.push({
@@ -60,17 +115,59 @@ export default {
         content: this.inputMessage
       })
       
-      // 模拟AI回复
-      setTimeout(() => {
-        this.chatList.push({
-          type: 'ai',
-          content: '我明白你的想法，让我们继续聊下去吧~'
-        })
-        this.scrollToBottom()
-      }, 500)
-      
+      const userMessage = this.inputMessage
       this.inputMessage = ''
       this.scrollToBottom()
+      
+      try {
+        // 构建消息历史
+        const messages = this.chatList.map(item => ({
+          role: item.type === 'user' ? 'user' : 'assistant',
+          content: [{
+            type: 'text',
+            text: item.content
+          }]
+        }))
+        
+        const response = await uni.request({
+          url: 'https://open.hunyuan.tencent.com/openapi/v1/agent/chat/completions',
+          method: 'POST',
+          header: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.selectedAgent.token}`
+          },
+          data: {
+            assistant_id: this.selectedAgent.id,
+            user_id: 'user_' + Date.now(),
+            messages: messages
+          }
+        })
+        
+        console.log('API响应:', response)
+        
+        if (response.data && response.data.choices && response.data.choices[0]) {
+          const aiResponse = response.data.choices[0].message.content[0].text
+          this.chatList.push({
+            type: 'ai',
+            content: aiResponse
+          })
+          this.scrollToBottom()
+        } else {
+          console.error('API响应格式错误:', response)
+          this.chatList.push({
+            type: 'ai',
+            content: '抱歉，我遇到了一些问题，请稍后再试。'
+          })
+          this.scrollToBottom()
+        }
+      } catch (error) {
+        console.error('API调用失败:', error)
+        this.chatList.push({
+          type: 'ai',
+          content: '抱歉，我遇到了一些问题，请稍后再试。'
+        })
+        this.scrollToBottom()
+      }
     },
     scrollToBottom() {
       setTimeout(() => {
@@ -90,11 +187,11 @@ export default {
 }
 
 .nav-bar {
-  padding: 40rpx 20rpx;
+  padding: 20rpx;
   background: rgba(255, 255, 255, 0.9);
-  border-radius: 0 0 30rpx 30rpx;
+  border-radius: 0 0 20rpx 20rpx;
   margin-bottom: 20rpx;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
 }
 
 .nav-content {
@@ -104,15 +201,52 @@ export default {
 }
 
 .title {
-  font-size: 48rpx;
+  font-size: 36rpx;
   font-weight: bold;
   color: #0288d1;
-  margin-bottom: 10rpx;
+  margin-bottom: 6rpx;
 }
 
 .subtitle {
-  font-size: 28rpx;
+  font-size: 24rpx;
   color: #666;
+}
+
+.agent-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20rpx;
+  padding: 20rpx;
+}
+
+.agent-card {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20rpx;
+  padding: 20rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4rpx 15rpx rgba(0, 0, 0, 0.1);
+}
+
+.agent-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  margin-bottom: 10rpx;
+}
+
+.agent-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 6rpx;
+}
+
+.agent-desc {
+  font-size: 22rpx;
+  color: #666;
+  text-align: center;
 }
 
 .chat-container {
@@ -124,7 +258,7 @@ export default {
 .chat-list {
   display: flex;
   flex-direction: column;
-  gap: 30rpx;
+  gap: 20rpx;
 }
 
 .chat-item {
@@ -147,8 +281,8 @@ export default {
 
 .message {
   max-width: 70%;
-  padding: 20rpx 30rpx;
-  border-radius: 30rpx;
+  padding: 16rpx 24rpx;
+  border-radius: 20rpx;
   font-size: 28rpx;
   line-height: 1.5;
 }

@@ -29,6 +29,13 @@
 			}
 		},
 		{
+			"path": "pages/chat/chat-detail",
+			"style": {
+				"navigationBarTitleText": "聊天详情",
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/match/match",
 			"style": {
 				"navigationBarTitleText": "知音匹配",
