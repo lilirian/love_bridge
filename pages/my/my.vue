@@ -19,24 +19,6 @@
           </view>
         </view>
       </view>
-      <view class="stats">
-        <view class="stat-item" @tap="goToFollowing">
-          <text class="number">{{ userProfile?.following || 0 }}</text>
-          <text class="label">关注</text>
-        </view>
-        <view class="stat-item" @tap="goToFollowers">
-          <text class="number">{{ userProfile?.followers || 0 }}</text>
-          <text class="label">粉丝</text>
-        </view>
-        <view class="stat-item" @tap="goToLikes">
-          <text class="number">{{ userProfile?.likes || 0 }}</text>
-          <text class="label">喜欢</text>
-        </view>
-        <view class="stat-item" @tap="goToMatches">
-          <text class="number">{{ userProfile?.matches || 0 }}</text>
-          <text class="label">匹配</text>
-        </view>
-      </view>
     </view>
     
     <!-- 功能菜单列表 -->
@@ -61,19 +43,18 @@
       
       <view class="menu-section">
         <text class="section-title">社交互动</text>
-        <view class="menu-item" @tap="goToMessages">
+        <view class="menu-item" @tap="goToLikes">
           <view class="icon-wrapper">
-            <text class="icon">💌</text>
+            <text class="icon">❤️</text>
           </view>
-          <text class="text">消息中心</text>
-          <text class="badge" v-if="unreadMessages > 0">{{unreadMessages}}</text>
+          <text class="text">我的喜欢</text>
           <text class="arrow">→</text>
         </view>
-        <view class="menu-item" @tap="goToStories">
+        <view class="menu-item" @tap="goToMatches">
           <view class="icon-wrapper">
-            <text class="icon">📝</text>
+            <text class="icon">💑</text>
           </view>
-          <text class="text">我的故事</text>
+          <text class="text">我的匹配</text>
           <text class="arrow">→</text>
         </view>
       </view>
@@ -157,30 +138,6 @@ const goToSettings = () => {
   })
 }
 
-const goToFollowing = () => {
-  if (!isLoggedIn.value) {
-    uni.navigateTo({
-      url: '/pages/auth/login'
-    })
-    return
-  }
-  uni.navigateTo({
-    url: '/pages/following/following'
-  })
-}
-
-const goToFollowers = () => {
-  if (!isLoggedIn.value) {
-    uni.navigateTo({
-      url: '/pages/auth/login'
-    })
-    return
-  }
-  uni.navigateTo({
-    url: '/pages/followers/followers'
-  })
-}
-
 const goToLikes = () => {
   if (!isLoggedIn.value) {
     uni.navigateTo({
@@ -202,30 +159,6 @@ const goToMatches = () => {
   }
   uni.navigateTo({
     url: '/pages/matches/matches'
-  })
-}
-
-const goToMessages = () => {
-  if (!isLoggedIn.value) {
-    uni.navigateTo({
-      url: '/pages/auth/login'
-    })
-    return
-  }
-  uni.navigateTo({
-    url: '/pages/messages/messages'
-  })
-}
-
-const goToStories = () => {
-  if (!isLoggedIn.value) {
-    uni.navigateTo({
-      url: '/pages/auth/login'
-    })
-    return
-  }
-  uni.navigateTo({
-    url: '/pages/stories/stories'
   })
 }
 
@@ -258,7 +191,6 @@ const handleLogout = () => {
 onMounted(() => {
   if (isLoggedIn.value) {
     store.dispatch('fetchUserProfile')
-    // TODO: 获取未读消息数
   } else {
     uni.navigateTo({
       url: '/pages/auth/login'
@@ -271,42 +203,42 @@ onMounted(() => {
 .my-container {
   min-height: 100vh;
   background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #ffb6c1 100%);
-  padding: 40rpx;
+  padding: 30rpx;
   position: relative;
   overflow: hidden;
   
   .user-card {
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 30rpx;
-    padding: 40rpx;
-    margin-bottom: 40rpx;
-    box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 24rpx;
+    padding: 30rpx;
+    margin-bottom: 30rpx;
+    box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.08);
     backdrop-filter: blur(10px);
     
     .user-info {
       display: flex;
       align-items: center;
-      margin-bottom: 40rpx;
+      margin-bottom: 0;
       
       .avatar-wrapper {
         position: relative;
-        margin-right: 30rpx;
+        margin-right: 24rpx;
         
         .avatar {
-          width: 140rpx;
-          height: 140rpx;
-          border-radius: 70rpx;
+          width: 120rpx;
+          height: 120rpx;
+          border-radius: 60rpx;
           border: 4rpx solid #fff;
           box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
         }
         
         .online-status {
           position: absolute;
-          bottom: 10rpx;
-          right: 10rpx;
-          width: 24rpx;
-          height: 24rpx;
-          border-radius: 12rpx;
+          bottom: 8rpx;
+          right: 8rpx;
+          width: 16rpx;
+          height: 16rpx;
+          border-radius: 8rpx;
           background: #ccc;
           border: 2rpx solid #fff;
           
@@ -317,20 +249,20 @@ onMounted(() => {
         
         .edit-avatar {
           position: absolute;
-          bottom: -10rpx;
+          bottom: -8rpx;
           left: 50%;
           transform: translateX(-50%);
           background: rgba(255, 64, 129, 0.9);
-          width: 40rpx;
-          height: 40rpx;
-          border-radius: 20rpx;
+          width: 32rpx;
+          height: 32rpx;
+          border-radius: 16rpx;
           display: flex;
           align-items: center;
           justify-content: center;
-          box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.2);
+          box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.2);
           
           .icon {
-            font-size: 24rpx;
+            font-size: 20rpx;
             color: #fff;
           }
         }
@@ -340,61 +272,36 @@ onMounted(() => {
         flex: 1;
         
         .username {
-          font-size: 40rpx;
+          font-size: 36rpx;
           font-weight: bold;
           color: #333;
           display: block;
-          margin-bottom: 10rpx;
+          margin-bottom: 8rpx;
         }
         
         .email {
-          font-size: 28rpx;
+          font-size: 26rpx;
           color: #666;
           display: block;
-          margin-bottom: 10rpx;
+          margin-bottom: 8rpx;
         }
         
         .vip-badge {
           display: inline-flex;
           align-items: center;
           background: linear-gradient(45deg, #FFD700, #FFA500);
-          padding: 4rpx 16rpx;
-          border-radius: 20rpx;
+          padding: 2rpx 12rpx;
+          border-radius: 16rpx;
           
           .icon {
-            font-size: 24rpx;
-            margin-right: 6rpx;
+            font-size: 20rpx;
+            margin-right: 4rpx;
           }
           
           text {
-            font-size: 24rpx;
+            font-size: 20rpx;
             color: #fff;
           }
-        }
-      }
-    }
-    
-    .stats {
-      display: flex;
-      justify-content: space-around;
-      border-top: 1rpx solid rgba(0, 0, 0, 0.05);
-      padding-top: 30rpx;
-      
-      .stat-item {
-        text-align: center;
-        flex: 1;
-        
-        .number {
-          font-size: 36rpx;
-          font-weight: bold;
-          color: #ff4081;
-          display: block;
-          margin-bottom: 10rpx;
-        }
-        
-        .label {
-          font-size: 24rpx;
-          color: #666;
         }
       }
     }
@@ -402,12 +309,12 @@ onMounted(() => {
   
   .menu-list {
     .menu-section {
-      margin-bottom: 30rpx;
+      margin-bottom: 24rpx;
       
       .section-title {
-        font-size: 28rpx;
+        font-size: 26rpx;
         color: #666;
-        margin-bottom: 20rpx;
+        margin-bottom: 12rpx;
         padding-left: 20rpx;
         display: block;
       }
@@ -415,22 +322,16 @@ onMounted(() => {
       .menu-item {
         display: flex;
         align-items: center;
-        background: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.95);
         border-radius: 20rpx;
-        padding: 30rpx;
-        margin-bottom: 20rpx;
+        padding: 24rpx;
+        margin-bottom: 12rpx;
         box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
         backdrop-filter: blur(10px);
-        transition: all 0.3s ease;
-        
-        &:active {
-          transform: scale(0.98);
-          background: rgba(255, 255, 255, 0.95);
-        }
         
         .icon-wrapper {
-          width: 80rpx;
-          height: 80rpx;
+          width: 70rpx;
+          height: 70rpx;
           background: rgba(255, 64, 129, 0.1);
           border-radius: 20rpx;
           display: flex;
@@ -439,27 +340,18 @@ onMounted(() => {
           margin-right: 20rpx;
           
           .icon {
-            font-size: 40rpx;
+            font-size: 36rpx;
           }
         }
         
         .text {
           flex: 1;
-          font-size: 32rpx;
+          font-size: 30rpx;
           color: #333;
         }
         
-        .badge {
-          background: #ff4081;
-          color: #fff;
-          font-size: 24rpx;
-          padding: 4rpx 12rpx;
-          border-radius: 20rpx;
-          margin-right: 20rpx;
-        }
-        
         .arrow {
-          font-size: 32rpx;
+          font-size: 30rpx;
           color: #999;
         }
       }
@@ -479,26 +371,26 @@ onMounted(() => {
       animation: float 6s ease-in-out infinite;
       
       &.circle-1 {
-        width: 400rpx;
-        height: 400rpx;
-        top: -100rpx;
-        right: -100rpx;
+        width: 300rpx;
+        height: 300rpx;
+        top: -50rpx;
+        right: -50rpx;
         animation-delay: 0s;
       }
       
       &.circle-2 {
-        width: 300rpx;
-        height: 300rpx;
-        bottom: -50rpx;
-        left: -50rpx;
+        width: 200rpx;
+        height: 200rpx;
+        bottom: -30rpx;
+        left: -30rpx;
         animation-delay: 2s;
       }
       
       &.circle-3 {
-        width: 200rpx;
-        height: 200rpx;
-        top: 50%;
-        right: 20%;
+        width: 150rpx;
+        height: 150rpx;
+        top: 40%;
+        right: 15%;
         animation-delay: 4s;
       }
     }
