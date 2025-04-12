@@ -12,11 +12,11 @@
     <!-- 功能卡片区域 -->
     <view class="card-grid">
       <!-- 万能恋爱导师卡片 -->
-      <view class="card" @tap="navigateTo('/pages/coach/coach')">
+      <view class="card" @tap="navigateTo('/pages/chat/chat-mentor')">
         <image class="card-image" src="/static/images/coach.png" mode="aspectFill"></image>
         <view class="card-content">
           <text class="card-title">万能恋爱导师</text>
-          <text class="card-desc">上传聊天记录，让AI帮你分析感情问题</text>
+          <text class="card-desc">上传聊天记录，获取专业建议</text>
           <view class="card-button">
             <text>立即使用</text>
             <text class="arrow">→</text>
@@ -42,7 +42,7 @@
         <image class="card-image" src="/static/images/profile.png" mode="aspectFill"></image>
         <view class="card-content">
           <text class="card-title">个人资料优化</text>
-          <text class="card-desc">让AI帮你打造完美的个人介绍</text>
+          <text class="card-desc">一键优化你的个人简介</text>
           <view class="card-button">
             <text>立即使用</text>
             <text class="arrow">→</text>

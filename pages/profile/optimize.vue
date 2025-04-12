@@ -4,7 +4,7 @@
     <view class="nav-bar">
       <view class="nav-content">
         <text class="title">个人资料优化</text>
-        <text class="subtitle">让AI帮你打造完美的个人介绍</text>
+        <text class="subtitle">AI帮你优化个人资料，提升吸引力</text>
       </view>
     </view>
 
@@ -12,14 +12,22 @@
     <view class="content">
       <!-- 输入区域 -->
       <view class="input-section">
-        <text class="section-title">当前个人简介</text>
-        <textarea 
-          class="input-textarea" 
-          v-model="currentProfile" 
-          placeholder="请输入您当前的个人简介..."
-          :maxlength="500"
-        ></textarea>
-        <text class="word-count">{{ currentProfile.length }}/500</text>
+        <text class="section-title">当前个人资料</text>
+        <view class="input-card">
+          <textarea 
+            class="input-textarea" 
+            v-model="currentProfile" 
+            placeholder="请描述你的个人资料，例如：
+- 基本信息（年龄、职业等）
+- 兴趣爱好
+- 性格特点
+- 生活习惯
+- 价值观
+- 其他重要信息..."
+            :maxlength="1000"
+          ></textarea>
+          <text class="word-count">{{ currentProfile.length }}/1000</text>
+        </view>
       </view>
 
       <!-- 优化按钮 -->
@@ -30,16 +38,18 @@
 
       <!-- 优化结果 -->
       <view class="result-section" v-if="optimizedProfile">
-        <text class="section-title">优化后的个人简介</text>
-        <view class="result-content">
-          <text>{{ optimizedProfile }}</text>
-        </view>
-        <view class="action-buttons">
-          <view class="copy-btn" @tap="copyResult">
-            <text>复制结果</text>
+        <text class="section-title">优化结果</text>
+        <view class="result-card">
+          <view class="result-content">
+            <text>{{ optimizedProfile }}</text>
           </view>
-          <view class="use-btn" @tap="useResult">
-            <text>使用此版本</text>
+          <view class="action-buttons">
+            <view class="copy-btn" @tap="copyResult">
+              <text>复制结果</text>
+            </view>
+            <view class="save-btn" @tap="saveResult">
+              <text>保存资料</text>
+            </view>
           </view>
         </view>
       </view>
@@ -60,7 +70,7 @@ export default {
     async optimizeProfile() {
       if (!this.currentProfile.trim()) {
         uni.showToast({
-          title: '请输入个人简介',
+          title: '请输入个人资料',
           icon: 'none'
         })
         return
@@ -74,10 +84,10 @@ export default {
           header: {
             'X-Source': 'openapi',
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer eDJrUI9XpQ64LjgMweTfoYh5DqIXJcAc'
+            'Authorization': 'Bearer YMIX3JyOKlPHvrYJ3xmy2pRwrPCdJSbl'
           },
           data: {
-            assistant_id: 'nDPb8gDN9hXy',
+            assistant_id: 'P4XEtqPu95io',
             user_id: 'user_' + Date.now(),
             stream: false,
             messages: [
@@ -86,18 +96,19 @@ export default {
                 content: [
                   {
                     type: 'text',
-                    text: `请帮我优化以下个人简介，使其更加吸引人、专业且富有魅力：
+                    text: `请帮我优化以下个人资料，使其更具吸引力：
 
 ${this.currentProfile}
 
 请从以下几个方面进行优化：
 1. 语言表达更加生动有趣
-2. 突出个人特点和优势
-3. 增加适当的细节描述
-4. 保持简洁但信息丰富
-5. 使用积极正面的语言
+2. 突出个人优势和特点
+3. 增加情感共鸣点
+4. 保持真实性和可信度
+5. 结构清晰，重点突出
+6. 增加互动性和话题性
 
-请直接返回优化后的个人简介，不需要其他解释。`
+请给出优化后的完整个人资料。`
                   }
                 ]
               }
@@ -134,10 +145,10 @@ ${this.currentProfile}
         }
       })
     },
-    useResult() {
-      this.currentProfile = this.optimizedProfile
+    saveResult() {
+      // TODO: 实现保存功能
       uni.showToast({
-        title: '已更新',
+        title: '保存成功',
         icon: 'success'
       })
     }
@@ -148,16 +159,16 @@ ${this.currentProfile}
 <style>
 .container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+  background: linear-gradient(135deg, #e1f5fe 0%, #b3e5fc 100%);
   padding: 20rpx;
 }
 
 .nav-bar {
-  padding: 20rpx;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 20rpx;
-  margin-bottom: 20rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+  padding: 30rpx;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
 }
 
 .nav-content {
@@ -167,14 +178,15 @@ ${this.currentProfile}
 }
 
 .title {
-  font-size: 36rpx;
+  font-size: 40rpx;
   font-weight: bold;
-  color: #ff4081;
-  margin-bottom: 6rpx;
+  color: #03a9f4;
+  margin-bottom: 10rpx;
+  text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.1);
 }
 
 .subtitle {
-  font-size: 24rpx;
+  font-size: 26rpx;
   color: #666;
 }
 
@@ -183,7 +195,7 @@ ${this.currentProfile}
 }
 
 .section-title {
-  font-size: 32rpx;
+  font-size: 34rpx;
   font-weight: bold;
   color: #333;
   margin-bottom: 20rpx;
@@ -191,38 +203,80 @@ ${this.currentProfile}
 }
 
 .input-section {
-  position: relative;
   margin-bottom: 30rpx;
+}
+
+.input-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 30rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+  border: 2rpx solid #03a9f4;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.input-card:focus-within {
+  border-color: #4fc3f7;
+  box-shadow: 0 6rpx 30rpx rgba(3, 169, 244, 0.2);
 }
 
 .input-textarea {
   width: 100%;
-  height: 300rpx;
+  height: 400rpx;
   background: #fff;
   border-radius: 20rpx;
-  padding: 20rpx;
+  padding: 30rpx;
   font-size: 28rpx;
+  line-height: 1.8;
+  color: #333;
+  border: none;
+  resize: none;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.input-textarea:focus {
+  outline: none;
+  background: #fff;
+}
+
+.input-textarea::placeholder {
+  color: #999;
+  font-size: 26rpx;
   line-height: 1.6;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
 }
 
 .word-count {
   position: absolute;
-  right: 20rpx;
-  bottom: 20rpx;
+  right: 30rpx;
+  bottom: 30rpx;
   font-size: 24rpx;
   color: #999;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 4rpx 12rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
 }
 
 .optimize-btn {
-  background: linear-gradient(45deg, #ff4081, #ff80ab);
+  background: linear-gradient(45deg, #03a9f4, #4fc3f7);
   color: #fff;
-  border-radius: 40rpx;
-  padding: 20rpx 0;
-  font-size: 32rpx;
+  border-radius: 50rpx;
+  padding: 25rpx 0;
+  font-size: 34rpx;
   text-align: center;
-  margin: 30rpx 0;
-  box-shadow: 0 4rpx 20rpx rgba(255, 64, 129, 0.3);
+  margin: 40rpx 0;
+  box-shadow: 0 4rpx 20rpx rgba(3, 169, 244, 0.3);
+  transition: all 0.3s ease;
+}
+
+.optimize-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 2rpx 10rpx rgba(3, 169, 244, 0.2);
 }
 
 .optimize-btn.loading {
@@ -230,36 +284,43 @@ ${this.currentProfile}
 }
 
 .result-section {
-  background: #fff;
-  border-radius: 20rpx;
+  margin-top: 40rpx;
+}
+
+.result-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 30rpx;
   padding: 30rpx;
-  margin-top: 30rpx;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
 }
 
 .result-content {
   background: #f8f9fa;
-  border-radius: 12rpx;
-  padding: 20rpx;
+  border-radius: 20rpx;
+  padding: 30rpx;
   margin: 20rpx 0;
   font-size: 28rpx;
-  line-height: 1.6;
+  line-height: 1.8;
   color: #333;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  max-height: 800rpx;
 }
 
 .action-buttons {
   display: flex;
   justify-content: space-between;
-  margin-top: 20rpx;
+  margin-top: 30rpx;
+  gap: 20rpx;
 }
 
-.copy-btn, .use-btn {
+.copy-btn, .save-btn {
   flex: 1;
   text-align: center;
-  padding: 20rpx 0;
-  border-radius: 40rpx;
-  font-size: 28rpx;
-  margin: 0 10rpx;
+  padding: 25rpx 0;
+  border-radius: 50rpx;
+  font-size: 30rpx;
+  transition: all 0.3s ease;
 }
 
 .copy-btn {
@@ -267,8 +328,18 @@ ${this.currentProfile}
   color: #666;
 }
 
-.use-btn {
-  background: #ff4081;
+.copy-btn:active {
+  background: #e0e0e0;
+  transform: scale(0.98);
+}
+
+.save-btn {
+  background: linear-gradient(45deg, #03a9f4, #4fc3f7);
   color: #fff;
+}
+
+.save-btn:active {
+  background: linear-gradient(45deg, #0288d1, #03a9f4);
+  transform: scale(0.98);
 }
 </style>

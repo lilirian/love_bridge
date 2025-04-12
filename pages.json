@@ -17,22 +17,19 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "AI恋爱助手",
-				"navigationStyle": "custom"
+				"navigationBarTitleText": "首页"
 			}
 		},
 		{
 			"path": "pages/profile/optimize",
 			"style": {
-				"navigationBarTitleText": "个人资料优化",
-				"navigationStyle": "custom"
+				"navigationBarTitleText": "个人资料优化"
 			}
 		},
 		{
 			"path": "pages/chat/chat",
 			"style": {
-				"navigationBarTitleText": "AI畅聊",
-				"navigationStyle": "custom"
+				"navigationBarTitleText": "聊天"
 			}
 		},
 		{
@@ -59,15 +56,13 @@
 		{
 			"path": "pages/my/my",
 			"style": {
-				"navigationBarTitleText": "我的",
-				"navigationStyle": "custom"
+				"navigationBarTitleText": "我的"
 			}
 		},
 		{
 			"path": "pages/profile/profile",
 			"style": {
-				"navigationBarTitleText": "个人资料",
-				"navigationStyle": "custom"
+				"navigationBarTitleText": "个人资料"
 			}
 		},
 		{
@@ -80,15 +75,13 @@
 		{
 			"path": "pages/coach/coach",
 			"style": {
-				"navigationBarTitleText": "万能恋爱导师",
-				"navigationStyle": "custom"
+				"navigationBarTitleText": "万能恋爱导师"
 			}
 		},
 		{
 			"path": "pages/analyze/analyze",
 			"style": {
-				"navigationBarTitleText": "约会对象分析",
-				"navigationStyle": "custom"
+				"navigationBarTitleText": "约会对象分析"
 			}
 		},
 		{
@@ -104,31 +97,37 @@
 				"navigationBarTitleText": "我的喜欢",
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path": "pages/chat/chat-mentor",
+			"style": {
+				"navigationBarTitleText": "万能恋爱导师"
+			}
 		}
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "AI恋爱助手",
+		"navigationBarTitleText": "恋爱桥",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},
 	"tabBar": {
-		"color": "#999999",
+		"color": "#7A7E83",
 		"selectedColor": "#ff4081",
-		"backgroundColor": "#ffffff",
 		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
 		"list": [
 			{
 				"pagePath": "pages/index/index",
-				"text": "主页",
-				"iconPath": "static/images/tabbar/home.png",
-				"selectedIconPath": "static/images/tabbar/home.png"
+				"iconPath": "static/tabbar/home.png",
+				"selectedIconPath": "static/tabbar/home-active.png",
+				"text": "首页"
 			},
 			{
 				"pagePath": "pages/chat/chat",
-				"text": "AI畅聊",
-				"iconPath": "static/images/tabbar/chat.png",
-				"selectedIconPath": "static/images/tabbar/chat.png"
+				"iconPath": "static/tabbar/chat.png",
+				"selectedIconPath": "static/tabbar/chat-active.png",
+				"text": "聊天"
 			},
 			{
 				"pagePath": "pages/match/match",
@@ -144,9 +143,9 @@
 			},
 			{
 				"pagePath": "pages/my/my",
-				"text": "我的",
-				"iconPath": "static/images/tabbar/my.png",
-				"selectedIconPath": "static/images/tabbar/my.png"
+				"iconPath": "static/tabbar/my.png",
+				"selectedIconPath": "static/tabbar/my-active.png",
+				"text": "我的"
 			}
 		]
 	}
