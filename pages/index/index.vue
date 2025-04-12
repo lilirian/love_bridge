@@ -38,7 +38,7 @@
       </view>
 
       <!-- 个人资料优化卡片 -->
-      <view class="card" @tap="navigateTo('/pages/profile/profile')">
+      <view class="card" @tap="navigateTo('/pages/profile/optimize')">
         <image class="card-image" src="/static/images/profile.png" mode="aspectFill"></image>
         <view class="card-content">
           <text class="card-title">个人资料优化</text>

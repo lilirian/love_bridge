@@ -147,7 +147,7 @@ const goToProfile = () => {
     return
   }
   uni.navigateTo({
-    url: '/pages/profile/optimize'
+    url: '/pages/profile/profile'
   })
 }
 

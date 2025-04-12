@@ -22,6 +22,13 @@
 			}
 		},
 		{
+			"path": "pages/profile/optimize",
+			"style": {
+				"navigationBarTitleText": "个人资料优化",
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/chat/chat",
 			"style": {
 				"navigationBarTitleText": "AI畅聊",
@@ -57,6 +64,13 @@
 			}
 		},
 		{
+			"path": "pages/profile/profile",
+			"style": {
+				"navigationBarTitleText": "个人资料",
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/chat-detail/chat-detail",
 			"style": {
 				"navigationBarTitleText": "聊天详情",
@@ -78,13 +92,6 @@
 			}
 		},
 		{
-			"path": "pages/profile/profile",
-			"style": {
-				"navigationBarTitleText": "个人资料优化",
-				"navigationStyle": "custom"
-			}
-		},
-		{
 			"path": "pages/stories/stories",
 			"style": {
 				"navigationBarTitleText": "情感故事分享",
@@ -95,13 +102,6 @@
 			"path": "pages/likes/likes",
 			"style": {
 				"navigationBarTitleText": "我的喜欢",
-				"navigationStyle": "custom"
-			}
-		},
-		{
-			"path": "pages/profile/optimize",
-			"style": {
-				"navigationBarTitleText": "个人简介优化",
 				"navigationStyle": "custom"
 			}
 		}
