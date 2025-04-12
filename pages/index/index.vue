@@ -96,11 +96,11 @@ export default {
 }
 
 .nav-bar {
-  padding: 40rpx 20rpx;
+  padding: 20rpx 20rpx;
   background: rgba(255, 255, 255, 0.9);
-  border-radius: 30rpx;
-  margin-bottom: 40rpx;
-  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
 }
 
 .nav-content {
@@ -110,35 +110,35 @@ export default {
 }
 
 .logo {
-  width: 120rpx;
-  height: 120rpx;
-  margin-bottom: 20rpx;
-}
-
-.title {
-  font-size: 48rpx;
-  font-weight: bold;
-  color: #ff4081;
+  width: 80rpx;
+  height: 80rpx;
   margin-bottom: 10rpx;
 }
 
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #ff4081;
+  margin-bottom: 6rpx;
+}
+
 .subtitle {
-  font-size: 28rpx;
+  font-size: 24rpx;
   color: #666;
 }
 
 .card-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20rpx;
-  padding: 20rpx;
+  gap: 16rpx;
+  padding: 16rpx;
 }
 
 .card {
   background: rgba(255, 255, 255, 0.95);
-  border-radius: 30rpx;
+  border-radius: 20rpx;
   overflow: hidden;
-  box-shadow: 0 8rpx 30rpx rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4rpx 15rpx rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
 }
 
@@ -148,26 +148,26 @@ export default {
 
 .card-image {
   width: 100%;
-  height: 200rpx;
+  height: 160rpx;
   object-fit: cover;
 }
 
 .card-content {
-  padding: 20rpx;
+  padding: 16rpx;
 }
 
 .card-title {
-  font-size: 32rpx;
+  font-size: 28rpx;
   font-weight: bold;
   color: #333;
-  margin-bottom: 10rpx;
+  margin-bottom: 8rpx;
   display: block;
 }
 
 .card-desc {
-  font-size: 24rpx;
+  font-size: 22rpx;
   color: #666;
-  margin-bottom: 20rpx;
+  margin-bottom: 16rpx;
   display: block;
 }
 
@@ -176,10 +176,10 @@ export default {
   align-items: center;
   justify-content: center;
   background: linear-gradient(45deg, #ff4081, #ff80ab);
-  padding: 16rpx 30rpx;
-  border-radius: 50rpx;
+  padding: 12rpx 24rpx;
+  border-radius: 40rpx;
   color: white;
-  font-size: 24rpx;
+  font-size: 22rpx;
   width: fit-content;
 }
 
@@ -194,12 +194,12 @@ export default {
 
 .footer {
   text-align: center;
-  padding: 40rpx 0;
-  margin-top: 40rpx;
+  padding: 20rpx 0;
+  margin-top: 20rpx;
 }
 
 .footer-text {
-  font-size: 24rpx;
+  font-size: 22rpx;
   color: #666;
 }
 </style> 

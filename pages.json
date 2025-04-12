@@ -101,31 +101,31 @@
 				"pagePath": "pages/index/index",
 				"text": "主页",
 				"iconPath": "static/images/tabbar/home.png",
-				"selectedIconPath": "static/images/tabbar/home-active.png"
+				"selectedIconPath": "static/images/tabbar/home.png"
 			},
 			{
 				"pagePath": "pages/chat/chat",
 				"text": "AI畅聊",
 				"iconPath": "static/images/tabbar/chat.png",
-				"selectedIconPath": "static/images/tabbar/chat-active.png"
+				"selectedIconPath": "static/images/tabbar/chat.png"
 			},
 			{
 				"pagePath": "pages/match/match",
 				"text": "知音匹配",
 				"iconPath": "static/images/tabbar/match.png",
-				"selectedIconPath": "static/images/tabbar/match-active.png"
+				"selectedIconPath": "static/images/tabbar/match.png"
 			},
 			{
 				"pagePath": "pages/private-chat/private-chat",
 				"text": "与你交流",
 				"iconPath": "static/images/tabbar/private-chat.png",
-				"selectedIconPath": "static/images/tabbar/private-chat-active.png"
+				"selectedIconPath": "static/images/tabbar/private-chat.png"
 			},
 			{
 				"pagePath": "pages/my/my",
 				"text": "我的",
 				"iconPath": "static/images/tabbar/my.png",
-				"selectedIconPath": "static/images/tabbar/my-active.png"
+				"selectedIconPath": "static/images/tabbar/my.png"
 			}
 		]
 	}
