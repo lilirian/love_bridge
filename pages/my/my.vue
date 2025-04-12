@@ -116,7 +116,12 @@ const unreadMessages = ref(0)
 const isLoggedIn = computed(() => store.state.isLoggedIn)
 const userInfo = computed(() => store.state.userInfo)
 const userProfile = computed(() => store.state.userProfile)
-const userAvatar = computed(() => userProfile.value?.avatar || '/static/images/default-avatar.png')
+const userAvatar = computed(() => {
+  if (userProfile.value?.avatar_url) {
+    return userProfile.value.avatar_url
+  }
+  return '/static/images/default-avatar.png'
+})
 
 const changeAvatar = () => {
   if (!isLoggedIn.value) {
@@ -142,7 +147,7 @@ const goToProfile = () => {
     return
   }
   uni.navigateTo({
-    url: '/pages/profile/profile'
+    url: '/pages/profile/optimize'
   })
 }
 
@@ -254,6 +259,10 @@ onMounted(() => {
   if (isLoggedIn.value) {
     store.dispatch('fetchUserProfile')
     // TODO: 获取未读消息数
+  } else {
+    uni.navigateTo({
+      url: '/pages/auth/login'
+    })
   }
 })
 </script>

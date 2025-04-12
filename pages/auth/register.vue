@@ -2,20 +2,10 @@
 	<view class="register-container">
 		<view class="register-header">
 			<text class="title">创建账号</text>
-			<text class="subtitle">加入AI恋爱助手</text>
+			<text class="subtitle">加入恋爱桥</text>
 		</view>
 		
 		<view class="register-form">
-			<view class="input-group">
-				<text class="label">邮箱</text>
-				<input 
-					type="text" 
-					v-model="email" 
-					placeholder="请输入邮箱"
-					class="input"
-				/>
-			</view>
-			
 			<view class="input-group">
 				<text class="label">用户名</text>
 				<input 
@@ -27,22 +17,59 @@
 			</view>
 			
 			<view class="input-group">
-				<text class="label">密码</text>
+				<text class="label">邮箱</text>
 				<input 
-					type="password" 
-					v-model="password" 
-					placeholder="请输入密码（至少6位）"
+					type="text" 
+					v-model="email" 
+					placeholder="请输入邮箱"
 					class="input"
 				/>
 			</view>
 			
 			<view class="input-group">
-				<text class="label">确认密码</text>
+				<text class="label">密码</text>
 				<input 
 					type="password" 
-					v-model="password2" 
-					placeholder="请再次输入密码"
+					v-model="password" 
+					placeholder="请输入密码"
 					class="input"
+				/>
+			</view>
+			
+			<view class="input-group">
+				<text class="label">性别</text>
+				<picker 
+					:range="genderOptions" 
+					:value="genderIndex" 
+					@change="handleGenderChange"
+					class="picker"
+				>
+					<view class="picker-value">
+						{{ genderOptions[genderIndex] }}
+					</view>
+				</picker>
+			</view>
+			
+			<view class="input-group">
+				<text class="label">出生日期</text>
+				<picker 
+					mode="date" 
+					:value="birthDate" 
+					@change="handleBirthDateChange"
+					class="picker"
+				>
+					<view class="picker-value">
+						{{ birthDate || '请选择出生日期' }}
+					</view>
+				</picker>
+			</view>
+			
+			<view class="input-group">
+				<text class="label">个人简介</text>
+				<textarea 
+					v-model="bio" 
+					placeholder="介绍一下你自己吧"
+					class="textarea"
 				/>
 			</view>
 			
@@ -66,34 +93,29 @@
 export default {
 	data() {
 		return {
-			email: '',
 			username: '',
+			email: '',
 			password: '',
-			password2: '',
+			gender: 'M',
+			genderIndex: 0,
+			genderOptions: ['男', '女'],
+			birthDate: '',
+			bio: '',
 			loading: false
 		}
 	},
 	methods: {
+		handleGenderChange(e) {
+			this.genderIndex = e.detail.value
+			this.gender = this.genderIndex === 0 ? 'M' : 'F'
+		},
+		handleBirthDateChange(e) {
+			this.birthDate = e.detail.value
+		},
 		async handleRegister() {
-			if (!this.email || !this.username || !this.password || !this.password2) {
+			if (!this.username || !this.email || !this.password || !this.birthDate) {
 				uni.showToast({
 					title: '请填写完整信息',
-					icon: 'none'
-				})
-				return
-			}
-			
-			if (this.password !== this.password2) {
-				uni.showToast({
-					title: '两次输入的密码不一致',
-					icon: 'none'
-				})
-				return
-			}
-			
-			if (this.password.length < 6) {
-				uni.showToast({
-					title: '密码长度不能少于6位',
 					icon: 'none'
 				})
 				return
@@ -102,17 +124,19 @@ export default {
 			this.loading = true
 			try {
 				const response = await uni.request({
-					url: 'http://localhost:8000/api/auth/register/',
+					url: 'http://127.0.0.1:8000/api/user/register/',
 					method: 'POST',
 					header: {
 						'Content-Type': 'application/json',
 						'Accept': 'application/json'
 					},
 					data: {
-						email: this.email,
 						username: this.username,
+						email: this.email,
 						password: this.password,
-						password2: this.password2
+						gender: this.gender,
+						birth_date: this.birthDate,
+						bio: this.bio || ''
 					}
 				})
 				
@@ -128,15 +152,19 @@ export default {
 					})
 					
 					// 跳转到首页
-					uni.switchTab({
+					uni.reLaunch({
 						url: '/pages/index/index'
 					})
 				} else {
 					let errorMsg = '注册失败'
-					if (response.data.email) {
+					if (response.data.username) {
+						errorMsg = response.data.username[0]
+					} else if (response.data.email) {
 						errorMsg = response.data.email[0]
 					} else if (response.data.password) {
 						errorMsg = response.data.password[0]
+					} else if (response.data.detail) {
+						errorMsg = response.data.detail
 					}
 					uni.showToast({
 						title: errorMsg,
@@ -197,6 +225,30 @@ export default {
 				background: #F5F5F5;
 				border-radius: 44rpx;
 				padding: 0 30rpx;
+				font-size: 28rpx;
+			}
+			
+			.picker {
+				width: 100%;
+				height: 88rpx;
+				background: #F5F5F5;
+				border-radius: 44rpx;
+				padding: 0 30rpx;
+				display: flex;
+				align-items: center;
+				
+				.picker-value {
+					font-size: 28rpx;
+					color: #333;
+				}
+			}
+			
+			.textarea {
+				width: 100%;
+				height: 200rpx;
+				background: #F5F5F5;
+				border-radius: 20rpx;
+				padding: 20rpx;
 				font-size: 28rpx;
 			}
 		}

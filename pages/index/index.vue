@@ -29,7 +29,7 @@
         <image class="card-image" src="/static/images/analyze.png" mode="aspectFill"></image>
         <view class="card-content">
           <text class="card-title">约会对象分析</text>
-          <text class="card-desc">AI帮你分析约会对象的性格特点</text>
+          <text class="card-desc">AI帮你分析约会对象希望的另一半</text>
           <view class="card-button">
             <text>立即使用</text>
             <text class="arrow">→</text>
@@ -54,8 +54,8 @@
       <view class="card" @tap="navigateTo('/pages/stories/stories')">
         <image class="card-image" src="/static/images/stories.png" mode="aspectFill"></image>
         <view class="card-content">
-          <text class="card-title">情感故事分享</text>
-          <text class="card-desc">分享你的故事，倾听他人的经历</text>
+          <text class="card-title">情感故事分析</text>
+          <text class="card-desc">分享你的故事，获取AI的专业分析和建议</text>
           <view class="card-button">
             <text>立即使用</text>
             <text class="arrow">→</text>
@@ -66,7 +66,7 @@
 
     <!-- 底部区域 -->
     <view class="footer">
-      <text class="footer-text">© 2024 AI恋爱助手</text>
+      <text class="footer-text">© 2025 AI恋爱助手</text>
     </view>
   </view>
 </template>
@@ -75,7 +75,9 @@
 export default {
   data() {
     return {
-      
+      storyContent: '',
+      analysisResult: '',
+      loading: false
     }
   },
   methods: {
@@ -83,6 +85,66 @@ export default {
       uni.navigateTo({
         url: url
       })
+    },
+    async analyzeStory() {
+      if (!this.storyContent.trim()) {
+        uni.showToast({
+          title: '请输入故事内容',
+          icon: 'none'
+        })
+        return
+      }
+      
+      this.loading = true
+      try {
+        const response = await uni.request({
+          url: 'https://open.hunyuan.tencent.com/openapi/v1/agent/chat/completions',
+          method: 'POST',
+          header: {
+            'X-Source': 'openapi',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer hDzFpYB0b0qKBYjY5S7PUHMcoR8vCT4t'
+          },
+          data: {
+            assistant_id: 'wxZhHLAo8R9b',
+            user_id: 'user_' + Date.now(),
+            stream: false,
+            messages: [
+              {
+                role: 'user',
+                content: [
+                  {
+                    type: 'text',
+                    text: `请分析以下情感故事，并给出对男女主角的建议：
+                    
+${this.storyContent}
+
+请从以下几个方面进行分析：
+1. 故事中的主要问题
+2. 男女主角的行为分析
+3. 建议的改进方案
+4. 情感关系的建议`
+                  }
+                ]
+              }
+            ]
+          }
+        })
+        
+        if (response.statusCode === 200) {
+          const result = response.data.choices[0].message.content
+          this.analysisResult = result
+        } else {
+          throw new Error('分析失败')
+        }
+      } catch (error) {
+        uni.showToast({
+          title: '分析失败，请稍后重试',
+          icon: 'none'
+        })
+      } finally {
+        this.loading = false
+      }
     }
   }
 }
@@ -200,6 +262,77 @@ export default {
 
 .footer-text {
   font-size: 22rpx;
+  color: #666;
+}
+
+.story-section {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-top: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.story-input {
+  position: relative;
+  margin-bottom: 20rpx;
+}
+
+.story-textarea {
+  width: 100%;
+  height: 400rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  line-height: 1.6;
+}
+
+.word-count {
+  position: absolute;
+  right: 20rpx;
+  bottom: 20rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.analyze-btn {
+  background: #ff4081;
+  color: #fff;
+  border-radius: 40rpx;
+  padding: 20rpx 0;
+  font-size: 32rpx;
+  margin-top: 20rpx;
+}
+
+.analyze-btn[disabled] {
+  background: #ccc;
+}
+
+.analysis-result {
+  margin-top: 40rpx;
+  background: #f8f9fa;
+  border-radius: 12rpx;
+  padding: 20rpx;
+}
+
+.result-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.result-content {
+  font-size: 28rpx;
+  line-height: 1.6;
   color: #666;
 }
 </style> 

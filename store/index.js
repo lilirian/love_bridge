@@ -1,24 +1,36 @@
 import { createStore } from 'vuex'
 
+// 从本地存储中获取初始状态
+const getInitialState = () => {
+    const token = uni.getStorageSync('access_token')
+    const userInfo = uni.getStorageSync('user_info')
+    const userProfile = uni.getStorageSync('user_profile')
+
+    return {
+        isLoggedIn: !!token,
+        userInfo: userInfo || null,
+        userProfile: userProfile || null,
+        token: token || null
+    }
+}
+
 const store = createStore({
-    state: {
-        isLoggedIn: false,
-        userInfo: null,
-        userProfile: null,
-        token: null
-    },
+    state: getInitialState(),
     mutations: {
         setIsLoggedIn(state, status) {
             state.isLoggedIn = status
         },
         setUserInfo(state, info) {
             state.userInfo = info
+            uni.setStorageSync('user_info', info)
         },
         setUserProfile(state, profile) {
             state.userProfile = profile
+            uni.setStorageSync('user_profile', profile)
         },
         setToken(state, token) {
             state.token = token
+            uni.setStorageSync('access_token', token)
         },
         logout(state) {
             state.isLoggedIn = false

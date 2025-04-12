@@ -90,6 +90,20 @@
 				"navigationBarTitleText": "情感故事分享",
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path": "pages/likes/likes",
+			"style": {
+				"navigationBarTitleText": "我的喜欢",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/profile/optimize",
+			"style": {
+				"navigationBarTitleText": "个人简介优化",
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"globalStyle": {

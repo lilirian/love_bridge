@@ -7,11 +7,11 @@
 		
 		<view class="login-form">
 			<view class="input-group">
-				<text class="label">邮箱</text>
+				<text class="label">邮箱/用户名</text>
 				<input 
 					type="text" 
-					v-model="email" 
-					placeholder="请输入邮箱"
+					v-model="username" 
+					placeholder="请输入邮箱或用户名"
 					class="input"
 				/>
 			</view>
@@ -46,14 +46,14 @@
 export default {
 	data() {
 		return {
-			email: '',
+			username: '',
 			password: '',
 			loading: false
 		}
 	},
 	methods: {
 		async handleLogin() {
-			if (!this.email || !this.password) {
+			if (!this.username || !this.password) {
 				uni.showToast({
 					title: '请填写完整信息',
 					icon: 'none'
@@ -63,65 +63,58 @@ export default {
 			
 			this.loading = true
 			try {
+				console.log('尝试登录，用户名:', this.username)
 				const response = await uni.request({
-					url: 'http://localhost:8000/api/auth/login/',
+					url: 'http://127.0.0.1:8000/api/user/login/',
 					method: 'POST',
 					header: {
 						'Content-Type': 'application/json',
 						'Accept': 'application/json'
 					},
 					data: {
-						email: this.email,
+						username: this.username,
 						password: this.password
 					}
 				})
 				
+				console.log('登录响应:', response)
+				
 				if (response.statusCode === 200) {
 					// 保存token和用户信息
-					uni.setStorageSync('access_token', response.data.tokens.access)
-					uni.setStorageSync('refresh_token', response.data.tokens.refresh)
-					uni.setStorageSync('user_info', response.data.user)
+					const { access, refresh, user } = response.data
+					uni.setStorageSync('access_token', access)
+					uni.setStorageSync('refresh_token', refresh)
+					uni.setStorageSync('user_info', user)
 					
 					// 更新全局用户状态
-					this.$store.commit('setUserInfo', response.data.user)
+					this.$store.commit('setUserInfo', user)
 					this.$store.commit('setIsLoggedIn', true)
+					this.$store.commit('setToken', access)
 					
 					uni.showToast({
 						title: '登录成功',
 						icon: 'success'
 					})
 					
-					// 获取用户详细信息
-					try {
-						const userResponse = await uni.request({
-							url: 'http://localhost:8000/api/user/profile/',
-							method: 'GET',
-							header: {
-								'Authorization': `Bearer ${response.data.tokens.access}`,
-								'Accept': 'application/json'
-							}
-						})
-						
-						if (userResponse.statusCode === 200) {
-							// 保存用户详细信息
-							uni.setStorageSync('user_profile', userResponse.data)
-							this.$store.commit('setUserProfile', userResponse.data)
-						}
-					} catch (error) {
-						console.error('获取用户信息失败:', error)
-					}
-					
 					// 跳转到首页
 					uni.reLaunch({
 						url: '/pages/index/index'
 					})
 				} else {
+					// 更详细的错误处理
+					let errorMsg = '登录失败'
+					if (response.data.detail) {
+						errorMsg = response.data.detail
+					} else if (response.data.error) {
+						errorMsg = response.data.error
+					}
 					uni.showToast({
-						title: response.data.error || '登录失败',
+						title: errorMsg,
 						icon: 'none'
 					})
 				}
 			} catch (error) {
+				console.error('登录错误:', error)
 				uni.showToast({
 					title: '网络错误，请稍后重试',
 					icon: 'none'
