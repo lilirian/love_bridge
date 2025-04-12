@@ -63,7 +63,6 @@ export default {
 			
 			this.loading = true
 			try {
-				console.log('尝试登录，用户名:', this.username)
 				const response = await uni.request({
 					url: 'http://127.0.0.1:8000/api/user/login/',
 					method: 'POST',
@@ -76,8 +75,6 @@ export default {
 						password: this.password
 					}
 				})
-				
-				console.log('登录响应:', response)
 				
 				if (response.statusCode === 200) {
 					// 保存token和用户信息
@@ -96,12 +93,20 @@ export default {
 						icon: 'success'
 					})
 					
-					// 跳转到首页
-					uni.reLaunch({
-						url: '/pages/index/index'
-					})
+					// 获取上一页的路径
+					const pages = getCurrentPages()
+					const prevPage = pages[pages.length - 2]
+					
+					if (prevPage) {
+						// 返回上一页
+						uni.navigateBack()
+					} else {
+						// 没有上一页，跳转到首页
+						uni.reLaunch({
+							url: '/pages/index/index'
+						})
+					}
 				} else {
-					// 更详细的错误处理
 					let errorMsg = '登录失败'
 					if (response.data.detail) {
 						errorMsg = response.data.detail

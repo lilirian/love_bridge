@@ -4,25 +4,8 @@ import { mapMutations } from 'vuex'
 export default {
 	onLaunch: function() {
 		console.log('App Launch')
-		// 检查本地存储中是否有token
-		const token = uni.getStorageSync('access_token')
-		const userInfo = uni.getStorageSync('user_info')
-		
-		console.log('启动时token状态:', token ? '存在' : '不存在')
-		console.log('启动时userInfo状态:', userInfo ? '存在' : '不存在')
-		
-		if (token && userInfo) {
-			console.log('尝试恢复登录状态')
-			// 恢复登录状态
-			this.setUserInfo(userInfo)
-			this.setIsLoggedIn(true)
-			this.setToken(token)
-			
-			// 验证token是否有效
-			this.validateToken(token)
-		} else {
-			console.log('未找到有效的登录信息，需要重新登录')
-		}
+		// 检查登录状态
+		this.checkLoginStatus()
 	},
 	onShow: function() {
 		console.log('App Show')
@@ -32,6 +15,22 @@ export default {
 	},
 	methods: {
 		...mapMutations(['setUserInfo', 'setIsLoggedIn', 'logout', 'setToken']),
+		checkLoginStatus() {
+			const token = uni.getStorageSync('access_token')
+			const userInfo = uni.getStorageSync('user_info')
+			
+			if (token && userInfo) {
+				// 更新全局状态
+				this.$store.commit('setUserInfo', userInfo)
+				this.$store.commit('setIsLoggedIn', true)
+				this.$store.commit('setToken', token)
+			} else {
+				// 未登录状态
+				this.$store.commit('setIsLoggedIn', false)
+				this.$store.commit('setUserInfo', null)
+				this.$store.commit('setToken', null)
+			}
+		},
 		async validateToken(token) {
 			try {
 				console.log('开始验证token')

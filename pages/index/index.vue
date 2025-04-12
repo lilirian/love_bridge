@@ -80,7 +80,27 @@ export default {
       loading: false
     }
   },
+  onLoad() {
+    this.checkLogin()
+  },
   methods: {
+    checkLogin() {
+      const isLoggedIn = this.$store.state.isLoggedIn
+      if (!isLoggedIn) {
+        uni.showModal({
+          title: '提示',
+          content: '请先登录',
+          confirmText: '去登录',
+          success: (res) => {
+            if (res.confirm) {
+              uni.navigateTo({
+                url: '/pages/auth/login'
+              })
+            }
+          }
+        })
+      }
+    },
     navigateTo(url) {
       uni.navigateTo({
         url: url
