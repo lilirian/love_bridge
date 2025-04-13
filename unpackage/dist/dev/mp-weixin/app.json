@@ -1,0 +1,65 @@
+{
+  "pages": [
+    "pages/auth/login",
+    "pages/auth/register",
+    "pages/index/index",
+    "pages/profile/optimize",
+    "pages/chat/chat",
+    "pages/chat/chat-detail",
+    "pages/match/match",
+    "pages/private-chat/private-chat",
+    "pages/my/my",
+    "pages/profile/profile",
+    "pages/chat-detail/chat-detail",
+    "pages/coach/coach",
+    "pages/analyze/analyze",
+    "pages/stories/stories",
+    "pages/likes/likes",
+    "pages/chat/chat-mentor"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "恋爱桥",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#ff4081",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/images/tabbar/home.png",
+        "selectedIconPath": "static/images/tabbar/home.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/chat/chat",
+        "iconPath": "static/images/tabbar/chat.png",
+        "selectedIconPath": "static/images/tabbar/chat.png",
+        "text": "ai畅聊"
+      },
+      {
+        "pagePath": "pages/match/match",
+        "text": "知音匹配",
+        "iconPath": "static/images/tabbar/match.png",
+        "selectedIconPath": "static/images/tabbar/match.png"
+      },
+      {
+        "pagePath": "pages/private-chat/private-chat",
+        "text": "与你交流",
+        "iconPath": "static/images/tabbar/private-chat.png",
+        "selectedIconPath": "static/images/tabbar/private-chat.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "iconPath": "static/images/tabbar/my.png",
+        "selectedIconPath": "static/images/tabbar/my.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

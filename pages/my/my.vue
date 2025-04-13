@@ -98,26 +98,67 @@ const isLoggedIn = computed(() => store.state.isLoggedIn)
 const userInfo = computed(() => store.state.userInfo)
 const userProfile = computed(() => store.state.userProfile)
 const userAvatar = computed(() => {
-  if (userProfile.value?.avatar_url) {
-    return userProfile.value.avatar_url
+  if (userProfile.value?.data?.avatar_url) {
+    if (userProfile.value.data.avatar_url.startsWith('http')) {
+      return userProfile.value.data.avatar_url
+    }
+    return 'http://localhost:8000' + userProfile.value.data.avatar_url
   }
   return '/static/images/default-avatar.png'
 })
 
-const changeAvatar = () => {
+const changeAvatar = async () => {
   if (!isLoggedIn.value) {
     uni.navigateTo({
       url: '/pages/auth/login'
     })
     return
   }
-  uni.chooseImage({
-    count: 1,
-    success: (res) => {
-      // TODO: 上传头像
-      console.log('选择图片成功', res)
+  
+  try {
+    const res = await uni.chooseImage({
+      count: 1,
+      sizeType: ['compressed'],
+      sourceType: ['album', 'camera']
+    })
+    
+    if (res.tempFilePaths.length > 0) {
+      const token = uni.getStorageSync('access_token')
+      const uploadRes = await uni.uploadFile({
+        url: 'http://localhost:8000/api/user/users/upload_avatar/',
+        filePath: res.tempFilePaths[0],
+        name: 'avatar',
+        header: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      
+      if (uploadRes.statusCode === 200) {
+        let data
+        try {
+          data = JSON.parse(uploadRes.data)
+        } catch (e) {
+          console.error('解析返回数据失败:', e)
+          data = uploadRes.data
+        }
+        
+        await store.dispatch('fetchUserProfile')
+        
+        uni.showToast({
+          title: '头像上传成功',
+          icon: 'success'
+        })
+      } else {
+        throw new Error('上传失败')
+      }
     }
-  })
+  } catch (error) {
+    console.error('上传出错:', error)
+    uni.showToast({
+      title: '上传失败',
+      icon: 'none'
+    })
+  }
 }
 
 const goToProfile = () => {
@@ -188,9 +229,20 @@ const handleLogout = () => {
 }
 
 // 页面显示时获取用户信息
-onMounted(() => {
+onMounted(async () => {
   if (isLoggedIn.value) {
-    store.dispatch('fetchUserProfile')
+    try {
+      await store.dispatch('fetchUserProfile')
+      // 打印用户信息，用于调试
+      console.log('用户信息:', userProfile.value)
+      console.log('头像URL:', userAvatar.value)
+    } catch (error) {
+      console.error('获取用户信息失败:', error)
+      uni.showToast({
+        title: '获取用户信息失败',
+        icon: 'none'
+      })
+    }
   } else {
     uni.navigateTo({
       url: '/pages/auth/login'

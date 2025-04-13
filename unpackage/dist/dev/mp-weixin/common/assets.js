@@ -1,0 +1,22 @@
+"use strict";
+const _imports_0$5 = "/static/images/logo.png";
+const _imports_1 = "/static/images/coach.png";
+const _imports_2 = "/static/images/analyze.png";
+const _imports_3 = "/static/images/profile.png";
+const _imports_4 = "/static/images/stories.png";
+const _imports_0$4 = "/static/images/user-avatar.png";
+const _imports_0$3 = "/static/images/empty-state.png";
+const _imports_0$2 = "/static/images/empty-chat.png";
+const _imports_0$1 = "/static/images/upload.png";
+const _imports_0 = "/static/images/empty-likes.png";
+exports._imports_0 = _imports_0$5;
+exports._imports_0$1 = _imports_0$4;
+exports._imports_0$2 = _imports_0$3;
+exports._imports_0$3 = _imports_0$2;
+exports._imports_0$4 = _imports_0$1;
+exports._imports_0$5 = _imports_0;
+exports._imports_1 = _imports_1;
+exports._imports_2 = _imports_2;
+exports._imports_3 = _imports_3;
+exports._imports_4 = _imports_4;
+//# sourceMappingURL=../../.sourcemap/mp-weixin/common/assets.js.map

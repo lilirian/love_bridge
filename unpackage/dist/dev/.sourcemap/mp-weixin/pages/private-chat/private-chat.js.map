@@ -1,0 +1,1 @@
+{"version":3,"file":"private-chat.js","sources":["pages/private-chat/private-chat.vue?type=page"],"sourcesContent":["import MiniProgramPage from '/Users/lilirain/Desktop/项目/我的大创/love_bridge/pages/private-chat/private-chat.vue'\nwx.createPage(MiniProgramPage)"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AACA,GAAG,WAAW,eAAe;"}

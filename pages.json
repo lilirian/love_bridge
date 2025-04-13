@@ -127,7 +127,7 @@
 				"pagePath": "pages/chat/chat",
 				"iconPath": "static/images/tabbar/chat.png",
 				"selectedIconPath": "static/images/tabbar/chat.png",
-				"text": "聊天"
+				"text": "ai畅聊"
 			},
 			{
 				"pagePath": "pages/match/match",

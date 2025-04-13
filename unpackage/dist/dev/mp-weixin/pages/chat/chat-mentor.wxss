@@ -1,0 +1,177 @@
+
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+  padding: 20rpx;
+}
+.nav-bar {
+  padding: 30rpx;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+.nav-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #ff4081;
+  margin-bottom: 10rpx;
+  text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.1);
+}
+.subtitle {
+  font-size: 26rpx;
+  color: #666;
+}
+.content {
+  padding: 20rpx;
+}
+.upload-section {
+  margin-bottom: 30rpx;
+}
+.upload-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 30rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+  border: 2rpx dashed #ff4081;
+  transition: all 0.3s ease;
+  min-height: 400rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.upload-card:active {
+  border-color: #ff80ab;
+  background: rgba(255, 255, 255, 0.9);
+}
+.preview-image {
+  width: 100%;
+  height: 400rpx;
+  border-radius: 20rpx;
+}
+.upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.upload-icon {
+  font-size: 80rpx;
+  color: #ff4081;
+  margin-bottom: 20rpx;
+}
+.upload-text {
+  font-size: 32rpx;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+.upload-tip {
+  font-size: 24rpx;
+  color: #999;
+}
+.text-input-section {
+  margin-bottom: 30rpx;
+}
+.chat-input {
+  width: 100%;
+  height: 300rpx;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  line-height: 1.6;
+  color: #333;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+  border: 2rpx solid #f0f0f0;
+  box-sizing: border-box;
+  word-break: break-all;
+  white-space: pre-wrap;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.chat-input:focus {
+  border-color: #ff4081;
+}
+.analyze-btn {
+  background: linear-gradient(45deg, #ff4081, #ff80ab);
+  color: #fff;
+  border-radius: 50rpx;
+  padding: 25rpx 0;
+  font-size: 34rpx;
+  text-align: center;
+  margin: 40rpx 0;
+  box-shadow: 0 4rpx 20rpx rgba(255, 64, 129, 0.3);
+  transition: all 0.3s ease;
+}
+.analyze-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 2rpx 10rpx rgba(255, 64, 129, 0.2);
+}
+.analyze-btn.loading {
+  background: #ccc;
+}
+.result-section {
+  margin-top: 40rpx;
+}
+.section-title {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+  display: block;
+}
+.result-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 30rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+.result-content {
+  background: #f8f9fa;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin: 20rpx 0;
+  font-size: 28rpx;
+  line-height: 1.8;
+  color: #333;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  max-height: 800rpx;
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30rpx;
+  gap: 20rpx;
+}
+.copy-btn, .save-btn {
+  flex: 1;
+  text-align: center;
+  padding: 25rpx 0;
+  border-radius: 50rpx;
+  font-size: 30rpx;
+  transition: all 0.3s ease;
+}
+.copy-btn {
+  background: #f5f5f5;
+  color: #666;
+}
+.copy-btn:active {
+  background: #e0e0e0;
+  transform: scale(0.98);
+}
+.save-btn {
+  background: linear-gradient(45deg, #ff4081, #ff80ab);
+  color: #fff;
+}
+.save-btn:active {
+  background: linear-gradient(45deg, #f50057, #ff4081);
+  transform: scale(0.98);
+}

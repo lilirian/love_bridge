@@ -1,0 +1,1 @@
+{"version":3,"file":"chat-detail.js","sources":["pages/chat-detail/chat-detail.vue?type=page"],"sourcesContent":["import MiniProgramPage from '/Users/lilirain/Desktop/项目/我的大创/love_bridge/pages/chat-detail/chat-detail.vue'\nwx.createPage(MiniProgramPage)"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AACA,GAAG,WAAW,eAAe;"}

@@ -1,0 +1,7 @@
+<view class="container"><view class="nav-bar"><view class="nav-content"><text class="title">个人资料优化</text><text class="subtitle">AI帮你优化个人资料，提升吸引力</text></view></view><view class="content"><view class="input-section"><text class="section-title">当前个人资料</text><view class="input-card"><block wx:if="{{r0}}"><textarea class="input-textarea" placeholder="请描述你的个人资料，例如：
+- 基本信息（年龄、职业等）
+- 兴趣爱好
+- 性格特点
+- 生活习惯
+- 价值观
+- 其他重要信息..." maxlength="{{1000}}" value="{{a}}" bindinput="{{b}}"></textarea></block><text class="word-count">{{c}}/1000</text></view></view><view bindtap="{{e}}" class="{{['optimize-btn', f && 'loading']}}"><text wx:if="{{d}}">一键优化</text><text wx:else>优化中...</text></view><view wx:if="{{g}}" class="result-section"><text class="section-title">优化结果</text><view class="result-card"><view class="result-content"><text>{{h}}</text></view><view class="action-buttons"><view class="copy-btn" bindtap="{{i}}"><text>复制结果</text></view><view class="save-btn" bindtap="{{j}}"><text>保存资料</text></view></view></view></view></view></view>
